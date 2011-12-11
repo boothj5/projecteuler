@@ -13,4 +13,5 @@
                     (setf i (+ i 2)))
                 (cond ((> i sqt) n)
                       (t (max i (largest-prime-factor (/ n i)))))))))
-                
+
+(largest-prime-factor 600851475143)                
