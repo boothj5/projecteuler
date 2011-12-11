@@ -1,16 +1,16 @@
-(defun smallest-factor (n)
-    (cond ((or (= n 0) (= n 1)) nil)    
-          ((or (= n 2) (= n 3)) n)
-          ((evenp n) 2)
-          (t (let ((test 3))
-                (loop while (not (factorp test n)) do
-                    (setf test (+ test 2)))
-                test))))
-
 (defun factorp (n m)
     (= (mod m n) 0))
 
 (defun floored-sqrt (num)
     (first (multiple-value-list (floor (sqrt num)))))
 
-
+(defun largest-prime-factor (n)
+    (cond  ((= n 2) 2)
+           ((evenp n) (largest-prime-factor (max 2 (/ n 2))))
+           (t (let ((sqt (floored-sqrt n))
+                   (i 3))
+                (loop while (and (<= i sqt) (not (factorp i n))) do
+                    (setf i (+ i 2)))
+                (cond ((> i sqt) n)
+                      (t (max i (largest-prime-factor (/ n i)))))))))
+                
